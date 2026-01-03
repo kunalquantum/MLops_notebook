@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MLOps | Ultimate Live Architecture</title>
+    <meta name="description"
+        content="An immersive, interactive live visualizer for production Machine Learning pipelines.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@300;400;700&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="dark-theme">
+    <div class="glow-bg"></div>
+
+    <main>
+        <div class="system-heartbeat">
+            <div class="heartbeat-item">
+                <span class="pulse-dot green"></span>
+                <span class="label">System:</span>
+                <span class="val" id="sys-status">Operational</span>
+            </div>
+            <div class="heartbeat-item">
+                <span class="label">Uptime:</span>
+                <span class="val" id="uptime">00:00:00</span>
+            </div>
+            <div class="heartbeat-item">
+                <span class="label">Active Signals:</span>
+                <span class="val" id="signal-count">0</span>
+            </div>
+        </div>
+
+        <section class="hero minimal">
+            <h1 class="reveal-text">ML<span>Ops</span> Architecture</h1>
+            <p class="reveal-text">Explore the end-to-end lifecycle of production Machine Learning through an active,
+                data-driven visualizer.</p>
+            <div class="hero-actions">
+                <button class="cta-btn primary-pulse" id="start-simulation">Simulate Deployment</button>
+            </div>
+        </section>
+
+        <section id="architecture" class="visualizer-section">
+            <div class="visualizer-container-main">
+                <div class="viz-wrapper glass">
+                    <div id="diagram-container">
+                        <svg id="mlops-svg" viewBox="0 0 1000 650" preserveAspectRatio="xMidYMid meet">
+                            <defs>
+                                <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                                    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.02)"
+                                        stroke-width="1" />
+                                </pattern>
+                                <linearGradient id="boxGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:rgba(15, 25, 50, 0.95)" />
+                                    <stop offset="100%" style="stop-color:rgba(35, 55, 100, 0.95)" />
+                                </linearGradient>
+                                <filter id="glow-small">
+                                    <feGaussianBlur stdDeviation="2" result="blur" />
+                                    <feMerge>
+                                        <feMergeNode in="blur" />
+                                        <feMergeNode in="SourceGraphic" />
+                                    </feMerge>
+                                </filter>
+                                <filter id="glow-large">
+                                    <feGaussianBlur stdDeviation="6" result="blur" />
+                                    <feMerge>
+                                        <feMergeNode in="blur" />
+                                        <feMergeNode in="SourceGraphic" />
+                                    </feMerge>
+                                </filter>
+                            </defs>
+                            <rect width="100%" height="100%" fill="url(#grid)" />
+
+                            <g class="flow-connectors">
+                                <path id="path-data-eng" class="flow-line" d="M 110 540 L 160 540" />
+                                <path id="path-eng-fs" class="flow-line" d="M 280 540 L 320 540" />
+                                <path id="path-fs-train" class="flow-line" d="M 480 540 L 550 540" />
+                                <path id="path-train-reg-low" class="flow-line" d="M 680 540 L 760 540" />
+                                <path id="path-reg-serve" class="flow-line" d="M 660 200 L 720 200" />
+                                <path id="path-serve-mon" class="flow-line" d="M 850 200 L 900 200" />
+                                <path id="path-repo-cicd" class="flow-line" d="M 220 230 L 220 280 L 340 280" />
+                                <path id="path-cicd-reg-up" class="flow-line" d="M 480 280 L 550 200" />
+                                <path id="path-cicd-meta" class="flow-line" d="M 410 320 L 410 380 L 550 380" />
+                                <path id="path-fs-cicd" class="flow-line" d="M 400 480 L 400 320" />
+                                <path id="path-train-meta" class="flow-line" d="M 615 480 L 615 410" />
+                                <path id="path-reglow-meta" class="flow-line" d="M 820 510 L 820 450 L 660 380" />
+                                <path id="path-serve-meta" class="flow-line" d="M 785 240 L 785 380 L 660 380" />
+                                <path id="path-mon-reglow" class="flow-line" d="M 945 230 L 945 540 L 880 540" />
+                                <path id="path-retrain" class="flow-line dashed-gold"
+                                    d="M 945 170 C 945 50, 410 50, 410 240" stroke-dasharray="10,5" />
+                            </g>
+
+                            <g id="nodes-layer">
+                                <!-- Top Row -->
+                                <g class="active-node" data-id="repo" transform="translate(160, 170)">
+                                    <rect width="120" height="60" rx="6" class="node-rect" />
+                                    <text x="60" y="28" class="text-main">Source Code</text>
+                                    <text x="60" y="45" class="text-sub">Repository</text>
+                                </g>
+
+                                <g class="active-node core" data-id="cicd" transform="translate(340, 240)">
+                                    <rect width="140" height="80" rx="8" class="node-rect" />
+                                    <text x="70" y="35" class="text-title">CI/CD</text>
+                                    <text x="70" y="55" class="text-title">Component</text>
+                                    <circle cx="10" cy="10" r="4" class="status-dot online" />
+                                </g>
+
+                                <g class="active-node" data-id="reg-up" transform="translate(550, 170)">
+                                    <rect width="110" height="60" rx="6" class="node-rect" />
+                                    <text x="55" y="28" class="text-main">Model</text>
+                                    <text x="55" y="45" class="text-sub">Registry</text>
+                                </g>
+
+                                <g class="active-node" data-id="serving" transform="translate(720, 160)">
+                                    <rect width="130" height="80" rx="8" class="node-rect" />
+                                    <text x="65" y="35" class="text-title">Model Serving</text>
+                                    <text x="65" y="55" class="text-tiny">REST API / Batch</text>
+                                </g>
+
+                                <g class="active-node" data-id="monitoring" transform="translate(900, 170)">
+                                    <rect width="90" height="60" rx="6" class="node-rect" />
+                                    <text x="45" y="36" class="text-main">Monitoring</text>
+                                </g>
+
+                                <!-- Mid Row -->
+                                <g class="active-node" data-id="metadata" transform="translate(550, 350)">
+                                    <rect width="110" height="60" rx="6" class="node-rect" />
+                                    <text x="55" y="28" class="text-main">ML Metadata</text>
+                                    <text x="55" y="45" class="text-sub">Store</text>
+                                </g>
+
+                                <!-- Bottom Row -->
+                                <g class="active-node" data-id="data" transform="translate(10, 510)">
+                                    <rect width="100" height="60" rx="6" class="node-rect" />
+                                    <text x="50" y="36" class="text-main">Data Sources</text>
+                                </g>
+
+                                <g class="active-node" data-id="engineering" transform="translate(160, 510)">
+                                    <rect width="120" height="60" rx="6" class="node-rect" />
+                                    <text x="60" y="28" class="text-main">Data & Feature</text>
+                                    <text x="60" y="45" class="text-sub">Engineering</text>
+                                </g>
+
+                                <g class="active-node container" data-id="feature-store"
+                                    transform="translate(320, 480)">
+                                    <rect width="160" height="160" rx="10" class="node-rect" />
+                                    <text x="80" y="25" class="text-title">Feature Store</text>
+                                    <rect x="15" y="45" width="130" height="45" rx="4" class="sub-rect" />
+                                    <text x="80" y="72" class="text-sub">Offline Store</text>
+                                    <rect x="15" y="100" width="130" height="45" rx="4" class="sub-rect" />
+                                    <text x="80" y="127" class="text-sub">Online Store</text>
+                                </g>
+
+                                <g class="active-node" data-id="training" transform="translate(550, 480)">
+                                    <rect width="130" height="120" rx="8" class="node-rect" />
+                                    <text x="65" y="45" class="text-title">Model Training</text>
+                                    <text x="65" y="65" class="text-title">Infrastructure</text>
+                                </g>
+
+                                <g class="active-node" data-id="reg-low" transform="translate(760, 510)">
+                                    <rect width="120" height="80" rx="6" class="node-rect" />
+                                    <text x="60" y="35" class="text-main">Model</text>
+                                    <text x="60" y="55" class="text-sub">Registry</text>
+                                </g>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="side-panel glass" id="detail-panel">
+                    <div class="panel-tabs">
+                        <button class="tab-btn active" data-tab="overview">Overview</button>
+                        <button class="tab-btn" data-tab="implementation">Logic</button>
+                        <button class="tab-btn" data-tab="best-practices">Best Practices</button>
+                    </div>
+
+                    <div class="panel-header">
+                        <h2 id="panel-title">System Overview</h2>
+                        <span class="badge" id="panel-status">Ready</span>
+                    </div>
+
+                    <div class="tab-content active" id="tab-overview">
+                        <div id="panel-desc" class="description-text">
+                            Select any architectural component to view production-grade technical specifications.
+                        </div>
+                        <div class="panel-section">
+                            <h4>Technical Specs</h4>
+                            <ul id="spec-list" class="spec-list"></ul>
+                        </div>
+                        <div class="telemetry-grid">
+                            <div class="tel-item">
+                                <span class="label">Utilization</span>
+                                <div class="bar-container">
+                                    <div class="bar" id="util-bar" style="width: 12%"></div>
+                                </div>
+                            </div>
+                            <div class="tel-item">
+                                <span class="label">Traffic</span>
+                                <span class="val" id="traffic-val">Stable</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="tab-implementation">
+                        <div class="live-code" id="panel-code">
+                            <pre><code class="language-python">// Implementation logic</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="tab-best-practices">
+                        <div id="practices-text" class="practices-text">
+                            Standardized MLOps workflows ensure model reliability and reproducibility.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="simulation-log glass">
+            <div class="log-header">
+                <h3>Live Pipeline Event Log</h3>
+                <span class="pulse-indicator"></span>
+            </div>
+            <div id="log-container">
+                <div class="log-entry">System idle. Ready for deployment...</div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
